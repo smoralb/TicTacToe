@@ -6,3 +6,6 @@ android {
         applicationId "com.smb.tictactoe"
     }
 }
+dependencies {
+    implementation project (':core')
+}
