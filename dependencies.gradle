@@ -1,0 +1,18 @@
+ext {
+    versions = [
+            core_ktx_version  : "1.3.2",
+            app_compat_version: "1.2.0",
+            material_version  : "1.3.0",
+            junit_4_version   : "4.+"
+    ]
+
+    basic = [
+            core_ktx_dependency  : "androidx.core:core-ktx:${versions.core_ktx_version}",
+            app_compat_dependency: "androidx.appcompat:appcompat:${versions.app_compat_version}",
+            material_dependency  : "com.google.android.material:material:${versions.material_version}",
+    ]
+
+    junit = [
+            junit_4_dependency: "junit:junit:${versions.junit_4_version}"
+    ]
+}
