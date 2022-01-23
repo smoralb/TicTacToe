@@ -1,0 +1,6 @@
+apply plugin: 'com.android.library'
+apply from: "$project.rootDir/base.gradle"
+
+dependencies {
+    implementation project(':core')
+}
