@@ -4,10 +4,10 @@ import com.smb.core.presentation.BaseFragment
 import com.smb.tictactoe.BR
 import com.smb.tictactoe.R
 import com.smb.tictactoe.databinding.GameFragmentBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TTTFragment : BaseFragment<TTTState, GameFragmentBinding, TTTViewModel>(
     R.layout.game_fragment, BR.viewModel
 ) {
-    override val viewModel: TTTViewModel
-        get() = TODO("Not yet implemented")
+    override val viewModel by viewModel<TTTViewModel>()
 }
