@@ -4,18 +4,9 @@ import com.smb.tictactoe.R
 
 class TTTMapper {
 
-    private var playerTurn = 1
-
-    fun getCurrentPlayer(): Int {
-        val gameChip = when (playerTurn % 2) {
+    fun getCurrentPlayer(playerTurn: Int) =
+        when (playerTurn % 2) {
             0 -> R.drawable.ic_nought
             else -> R.drawable.ic_cross
         }
-        playerTurn += 1
-        return gameChip
-    }
-
-    fun resetPlayerTurn() {
-        playerTurn = 1
-    }
 }

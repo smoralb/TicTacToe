@@ -10,9 +10,11 @@ class TTTViewModel(
 ) : BaseViewModel<TTTState>() {
 
     var playerChip: MutableLiveData<Int> = MutableLiveData(0)
+    private var playerTurn = 0
 
     fun onButtonClick() {
-        playerChip update mapper.getCurrentPlayer()
+        playerChip update mapper.getCurrentPlayer(playerTurn)
+        playerTurn += 1
     }
 
 }
