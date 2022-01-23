@@ -10,4 +10,5 @@
     
     <!-- board colors -->
     <color name="dark_gray">#51545D</color>
+    <color name="light_aquamarine">#00BEAC</color>
 </resources>
