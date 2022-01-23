@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Board dimens -->
+    <dimen name="board_player_turn_title">24sp</dimen>
+    <dimen name="board_player_turn_title_margin_top">20dp</dimen>
+    <dimen name="board_chips_thickness">10dp</dimen>
+    <dimen name="board_chip_current_player_height">60dp</dimen>
+    <dimen name="board_chip_current_player_width">60dp</dimen>
+</resources>

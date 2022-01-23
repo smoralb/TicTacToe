@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
-    <string name="main_view_title_current_player">Current Player</string>
+    <string name="board_title_current_player">Current Player: </string>
+    <string name="board_new_game">NEW GAME</string>
 </resources>

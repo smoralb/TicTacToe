@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.smb.tictactoe.presentation.TTTViewModel" />
@@ -13,12 +15,24 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/lbCurrentPlayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_view_title_current_player"
+            android:layout_marginTop="@dimen/board_player_turn_title_margin_top"
+            android:text="@string/board_title_current_player"
+            android:textSize="@dimen/board_player_turn_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivCurrentPlayer"
+            android:layout_width="@dimen/board_chip_current_player_width"
+            android:layout_height="@dimen/board_chip_current_player_height"
+            tools:src="@drawable/ic_cross"
+            app:layout_constraintBottom_toBottomOf="@+id/lbCurrentPlayer"
+            app:layout_constraintLeft_toRightOf="@+id/lbCurrentPlayer"
+            app:layout_constraintTop_toTopOf="@+id/lbCurrentPlayer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
