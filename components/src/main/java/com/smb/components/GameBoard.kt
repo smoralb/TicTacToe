@@ -7,7 +7,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.databinding.BindingAdapter
 import com.smb.core.extensions.getColorByResourceId
 import kotlin.math.ceil
 import kotlin.math.min
@@ -26,6 +25,7 @@ class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, at
     // Will be deleted when all logic is made in the ViewModel
     private val gameLogic = GameLogic()
     private var cellSize = ZERO
+    var winningLine = false
 
     init {
         this.setBackgroundColor(resources.getColorByResourceId(context, R.color.white))
@@ -68,14 +68,19 @@ class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, at
             val row = ceil(y / cellSize)
             val column = ceil(x / cellSize)
 
-            if (gameLogic.updateGameBoard(row.toInt(), column.toInt())) {
+            // To avoid user to place another chip if there is a winner
+            if (!winningLine) {
+                if (gameLogic.updateGameBoard(row.toInt(), column.toInt())) {
 
-                // To force to redraw the gameBoard, call onDraw method again
-                invalidate()
+                    // To force to redraw the gameBoard, call onDraw method again
+                    invalidate()
 
-                if (gameLogic.player % 2 == 0) {
-                    gameLogic.player = gameLogic.player - 1
-                } else gameLogic.player = gameLogic.player + 1
+                    winningLine = gameLogic.winnerCheck()
+
+                    if (gameLogic.player % 2 == 0) {
+                        gameLogic.player = gameLogic.player - 1
+                    } else gameLogic.player = gameLogic.player + 1
+                }
             }
             true
         } else false
@@ -175,8 +180,7 @@ class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
-    @BindingAdapter("resetGameBoard")
-    fun resetGameBoard(view: GameBoard) {
-        view.gameLogic.resetGameBoard()
+    fun resetGame() {
+        gameLogic.resetGameBoard()
     }
 }

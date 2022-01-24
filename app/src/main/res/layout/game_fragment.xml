@@ -48,8 +48,7 @@
             app:layout_constraintBottom_toTopOf="@+id/btnNewGame"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llCurrentPlayer"
-            app:resetGameBoard="@{viewModel}"/>
+            app:layout_constraintTop_toBottomOf="@+id/llCurrentPlayer"/>
 
         <Button
             android:id="@+id/btnNewGame"

@@ -6,6 +6,7 @@ class GameLogic {
 
     var board = arrayOf<Array<Int>>()
     var player = 1
+    var isWinner = false
 
     init {
         // A 4x4 array of Int, all set to 0.
@@ -13,8 +14,8 @@ class GameLogic {
     }
 
     fun updateGameBoard(row: Int, column: Int): Boolean {
-        return if (board[row-1][column-1] == 0) {
-            board[row-1][column-1] = player
+        return if (board[row - 1][column - 1] == 0) {
+            board[row - 1][column - 1] = player
             true
         } else {
             false
@@ -23,6 +24,44 @@ class GameLogic {
 
     fun resetGameBoard() {
         board.forEach2D { board[it][it] = 0 }
+    }
+
+    fun winnerCheck(): Boolean {
+
+        for (row in board.indices) {
+            if (board[row][0] == board[row][1] && board[row][0] == board[row][2] &&
+                board[row][0] == board[row][3] && board[row][0] != 0
+            ) {
+                isWinner = true
+            }
+        }
+
+        for (col in board.indices) {
+            if (board[0][col] == board[1][col] && board[2][col] == board[0][col] &&
+                board[3][col] == board[0][col] && board[0][col] != 0
+            ) {
+                isWinner = true
+            }
+        }
+
+        if (board[0][0] == board[1][1] && board[0][0] == board[2][2] && board[0][0] == board[3][3]
+            && board[0][0] != 0
+        ) {
+            isWinner = true
+        }
+
+        if (board[0][3] == board[1][2] && board[2][1] == board[0][3] && board[3][0] == board[0][3]
+            && board[0][3] != 0) {
+            isWinner = true
+        }
+
+        val isBoardFilled = board.all { row ->
+            row.all { col ->
+                col == 1
+            }
+        }
+
+        return (isWinner || isBoardFilled)
     }
 
 }
