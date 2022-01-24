@@ -35,14 +35,6 @@ class GameLogic {
         reversedDiagonal = 0
         verticalCount = 0
 
-        for (row in board.indices) {
-            if (board[row][0] == board[row][1] && board[row][0] == board[row][2] &&
-                board[row][0] == board[row][3] && board[row][0] != 0
-            ) {
-                isWinner = true
-            }
-        }
-
         for (col in board.indices) {
             if (!isWinner) {
                 verticalCount = 0
@@ -63,10 +55,14 @@ class GameLogic {
             checkReversedDiagonal()
         }
 
+        if (!isWinner) {
+            checkCorners()
+        }
+
         return (isWinner || checkIfBoardIsFilled())
     }
 
-    private fun checkVertical(col: Int){
+    private fun checkVertical(col: Int) {
         for (row in board.indices) {
             if (board[row][col] != 0 && board[row][col] == board[0][col]) {
                 verticalCount += 1
@@ -105,6 +101,15 @@ class GameLogic {
 
         isWinner = reversedDiagonal == board.size
     }
+
+    private fun checkCorners() {
+        if((board[0][0] + board[0][board.size - 1] + board[0][board.size - 1] + board[board.size - 1][board.size - 1]) == board.size){
+            if (board[0][0] == board[0][board.size - 1] && board[0][board.size - 1] == board[board.size - 1][board.size - 1]) {
+                isWinner = true
+            }
+        }
+    }
+
 
     private fun checkIfBoardIsFilled() = board.all { row ->
         row.all { col ->
