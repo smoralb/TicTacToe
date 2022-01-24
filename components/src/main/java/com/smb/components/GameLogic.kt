@@ -10,6 +10,7 @@ class GameLogic {
     var diagonal = 0
     var reversedDiagonal = 0
     var verticalCount = 0
+    var horizontalCount = 0
 
     init {
         // A 4x4 array of Int, all set to 0.
@@ -42,10 +43,16 @@ class GameLogic {
             }
         }
 
+        for (col in board.indices) {
+            if (!isWinner) {
+                verticalCount = 0
+                checkVertical(col)
+            }
+        }
 
         for (row in board.indices) {
             if (!isWinner) {
-                verticalCount = 0
+                horizontalCount = 0
                 checkHorizontal(row)
             }
         }
@@ -59,13 +66,22 @@ class GameLogic {
         return (isWinner || checkIfBoardIsFilled())
     }
 
-    private fun checkHorizontal(row: Int) {
-        for (col in board.indices) {
-            if (board[0][col] != 0 && board[row][col] == board[row][0]) {
+    private fun checkVertical(col: Int){
+        for (row in board.indices) {
+            if (board[row][col] != 0 && board[row][col] == board[0][col]) {
                 verticalCount += 1
             }
         }
         isWinner = verticalCount == board.size
+    }
+
+    private fun checkHorizontal(row: Int) {
+        for (col in board.indices) {
+            if (board[0][col] != 0 && board[row][col] == board[0][col]) {
+                horizontalCount += 1
+            }
+        }
+        isWinner = horizontalCount == board.size
     }
 
     private fun checkMainDiagonal() {
