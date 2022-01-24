@@ -28,7 +28,6 @@ class GameLogic {
     }
 
     fun winnerCheck(): Boolean {
-
         diagonal = 0
 
         for (row in board.indices) {
@@ -56,18 +55,13 @@ class GameLogic {
             isWinner = true
         }
 
-        val isBoardFilled = board.all { row ->
-            row.all { col ->
-                col == 1
-            }
-        }
 
-        return (isWinner || isBoardFilled)
+        return (isWinner || checkIfBoardIsFilled())
     }
 
     private fun checkMainDiagonal(): Boolean {
         for (value in board.indices) {
-            if (board[value][value] != 0)
+            if (board[value][value] != 0 && board[value][value] == board[0][0])
                 diagonal += 1
         }
 
@@ -75,6 +69,12 @@ class GameLogic {
             isWinner = true
         }
         return isWinner
+    }
+
+    private fun checkIfBoardIsFilled() = board.all { row ->
+        row.all { col ->
+            col == 1
+        }
     }
 
 }
