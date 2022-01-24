@@ -77,7 +77,7 @@ class GameLogic {
 
     private fun checkHorizontal(row: Int) {
         for (col in board.indices) {
-            if (board[0][col] != 0 && board[row][col] == board[0][col]) {
+            if (board[row][col] != 0 && board[row][col] == board[0][col]) {
                 horizontalCount += 1
             }
         }
