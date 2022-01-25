@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.smb.tictactoe.presentation.TTTViewModel" />
@@ -19,10 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_top_board_player_turn"
+            app:layout_constraintBottom_toTopOf="@+id/gbGame"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/gbGame">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +49,8 @@
             app:layout_constraintBottom_toTopOf="@+id/btnNewGame"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llCurrentPlayer"/>
+            app:layout_constraintTop_toBottomOf="@+id/llCurrentPlayer"
+            app:resetGameBoard="@{viewModel.clearBoard}" />
 
         <Button
             android:id="@+id/btnNewGame"

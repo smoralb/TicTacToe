@@ -1,7 +1,5 @@
 package com.smb.components
 
-import com.smb.core.extensions.forEach2D
-
 class GameLogic {
 
     var board = arrayOf<Array<Int>>()
@@ -17,17 +15,22 @@ class GameLogic {
         board = Array(4) { Array(4) { 0 } }
     }
 
-    fun updateGameBoard(row: Int, column: Int): Boolean {
-        return if (board[row - 1][column - 1] == 0) {
-            board[row - 1][column - 1] = player
+    //To check if there is a chip placed in the selected cell
+    fun isCellAvailable(row: Int, column: Int): Boolean =
+        if (board[row][column] == 0) {
+            board[row][column] = player
             true
         } else {
             false
         }
-    }
 
     fun resetGameBoard() {
-        board.forEach2D { board[it][it] = 0 }
+        for (row in board.indices) {
+            for (col in board.indices) {
+                board[row][col] = 0
+            }
+        }
+        player = 1
     }
 
     fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {

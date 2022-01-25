@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.databinding.BindingAdapter
 import com.smb.core.extensions.getColorByResourceId
 import kotlin.math.ceil
 import kotlin.math.min
@@ -18,16 +19,15 @@ private const val CELL_SEPARATOR_THICKNESS = 3F
 private const val GAME_CHIPS_THICKNESS = 20F
 private const val GAME_CHIPS_MARGIN = 0.2F
 
-class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
-
-    private val paint = Paint()
+class GameBoard : View {
 
     // Will be deleted when all logic is made in the ViewModel
-    private val gameLogic = GameLogic()
+    private val gameLogic: GameLogic = GameLogic()
     private var cellSize = ZERO
     var winningLine = false
+    private val paint: Paint = Paint()
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.setBackgroundColor(resources.getColorByResourceId(context, R.color.white))
     }
 
@@ -61,16 +61,13 @@ class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, at
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val x = event.x
-        val y = event.y
-
-        return if (event.action == MotionEvent.ACTION_DOWN) {
-            val row = ceil(y / cellSize)
-            val column = ceil(x / cellSize)
+       return if (event.action == MotionEvent.ACTION_DOWN) {
+            val row = ceil(event.y / cellSize)
+            val column = ceil(event.x / cellSize)
 
             // To avoid user to place another chip if there is a winner
             if (!winningLine) {
-                if (gameLogic.updateGameBoard(row.toInt(), column.toInt())) {
+                if (gameLogic.isCellAvailable(row.toInt() - 1, column.toInt() - 1)) {
 
                     // To force to redraw the gameBoard, call onDraw method again
                     invalidate()
@@ -136,11 +133,12 @@ class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
+    // Here is defined how it is going to be shown the game chips.
+
     private fun drawX(canvas: Canvas, row: Int, column: Int) {
         addGameChipsStyle()
 
         /*
-            Here is defined how it is going to be shown the game chips.
             For X, two line are going to be drawn defining the start and the end point of each
             of the edges and some margin is added to the chip to not fill the entire cell (cellSize * 0.2F)
          */
@@ -180,7 +178,19 @@ class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, at
         }
     }
 
-    fun resetGame() {
+    private fun resetBoard() {
         gameLogic.resetGameBoard()
+        invalidate()
     }
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("resetGameBoard")
+        fun resetGameBoard(view: GameBoard, value: Boolean) {
+            if (value) {
+                view.resetBoard()
+            }
+        }
+    }
+
 }
