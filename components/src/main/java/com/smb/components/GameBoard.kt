@@ -75,7 +75,7 @@ class GameBoard(context: Context, attributeSet: AttributeSet) : View(context, at
                     // To force to redraw the gameBoard, call onDraw method again
                     invalidate()
 
-                    winningLine = gameLogic.winnerCheck()
+                    winningLine = gameLogic.winnerCheck(row.toInt(), column.toInt())
 
                     if (gameLogic.player % 2 == 0) {
                         gameLogic.player = gameLogic.player - 1

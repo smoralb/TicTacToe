@@ -30,7 +30,7 @@ class GameLogic {
         board.forEach2D { board[it][it] = 0 }
     }
 
-    fun winnerCheck(): Boolean {
+    fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {
         diagonal = 0
         reversedDiagonal = 0
         verticalCount = 0
@@ -57,6 +57,10 @@ class GameLogic {
 
         if (!isWinner) {
             checkCorners()
+        }
+
+        if (!isWinner) {
+            checkIfBox(eventRow, eventCol)
         }
 
         return (isWinner || checkIfBoardIsFilled())
@@ -103,9 +107,104 @@ class GameLogic {
     }
 
     private fun checkCorners() {
-        if((board[0][0] + board[0][board.size - 1] + board[0][board.size - 1] + board[board.size - 1][board.size - 1]) == board.size){
-            if (board[0][0] == board[0][board.size - 1] && board[0][board.size - 1] == board[board.size - 1][board.size - 1]) {
+        if ((board[0][0] + board[0][board.size - 1] + board[0][board.size - 1] + board[board.size - 1][board.size - 1]) == board.size) {
+            if (board[0][0] == board[0][board.size - 1] && board[0][0] == board[board.size - 1][board.size - 1]) {
                 isWinner = true
+            }
+        }
+    }
+
+    private fun checkIfBox(row: Int, col: Int) {
+        val boardRow = row - 1
+        val boardCol = col - 1
+
+        when (row) {
+            1 -> checkBottomColumn(row, col, boardRow, boardCol)
+            board.size -> checkUpperColumn(col, boardRow, boardCol)
+            else -> checkMiddleColumn(row, col, boardRow, boardCol)
+        }
+    }
+
+    private fun checkMiddleColumn(row: Int, col: Int, boardRow: Int, boardCol: Int) {
+        when (col) {
+            1 -> {
+                checkUpperRightPosition(col, boardRow, boardCol)
+                checkBottomRightPosition(row, col, boardRow, boardCol)
+            }
+            board.size -> {
+                checkUpperLeftPosition(boardRow, boardCol)
+                checkBottomLeftPosition(row, boardRow, boardCol)
+            }
+            else -> {
+                checkUpperRightPosition(col, boardRow, boardCol)
+                checkUpperLeftPosition(boardRow, boardCol)
+                checkBottomLeftPosition(row, boardRow, boardCol)
+                checkBottomRightPosition(row, col, boardRow, boardCol)
+            }
+        }
+    }
+
+    private fun checkBottomColumn(row: Int, col: Int, boardRow: Int, boardCol: Int) {
+        when (col) {
+            1 -> checkBottomRightPosition(row, col, boardRow, boardCol)
+            else -> {
+                if (col != board.size) {
+                    checkBottomLeftPosition(row, boardRow, boardCol)
+                    checkBottomRightPosition(row, col, boardRow, boardCol)
+                } else {
+                    checkBottomLeftPosition(row, boardRow, boardCol)
+                }
+            }
+        }
+    }
+
+    private fun checkUpperColumn(col: Int, boardRow: Int, boardCol: Int) {
+        when (col) {
+            1 -> checkUpperRightPosition(col, boardRow, boardCol)
+            board.size -> checkUpperLeftPosition(boardRow, boardCol)
+            else -> {
+                checkUpperRightPosition(col, boardRow, boardCol)
+                checkUpperLeftPosition(boardRow, boardCol)
+            }
+        }
+    }
+
+    private fun checkBottomRightPosition(row: Int, col: Int, boardRow: Int, boardCol: Int) {
+        if (board[boardRow][col] != 0 && board[boardRow][col] == board[boardRow][boardCol]) {// horizontal right
+            if (board[row][col] != 0 && board[row][col] == board[boardRow][boardCol]) { // diagonal bottom right
+                if (board[row][boardCol] != 0 && board[row][boardCol] == board[boardRow][boardCol]) { // vertical bottom
+                    isWinner = true
+                }
+            }
+        }
+    }
+
+    private fun checkUpperRightPosition(col: Int, boardRow: Int, boardCol: Int) {
+        if (board[boardRow - 1][boardCol] != 0 && board[boardRow - 1][boardCol] == board[boardRow][boardCol]) { // vertical upper
+            if (board[boardRow][col] != 0 && board[boardRow][col] == board[boardRow][boardCol]) { // horizontal right
+                if (board[boardRow - 1][boardCol + 1] != 0 && board[boardRow - 1][boardCol + 1] == board[boardRow][boardCol]) { // diagonal upper right
+                    isWinner = true
+                }
+            }
+        }
+    }
+
+    private fun checkUpperLeftPosition(boardRow: Int, boardCol: Int) {
+        if (board[boardRow - 1][boardCol] != 0 && board[boardRow - 1][boardCol] == board[boardRow][boardCol]) { // vertical upper
+            if (board[boardRow][boardCol - 1] != 0 && board[boardRow][boardCol - 1] == board[boardRow][boardCol]) { // vertical left
+                if (board[boardRow - 1][boardCol - 1] != 0 && board[boardRow - 1][boardCol - 1] == board[boardRow][boardCol]) { // diagonal upper left
+                    isWinner = true
+                }
+            }
+        }
+    }
+
+    private fun checkBottomLeftPosition(row: Int, boardRow: Int, boardCol: Int) {
+        if (board[boardRow][boardCol - 1] != 0 && board[boardRow][boardCol - 1] == board[boardRow][boardCol]) { // vertical left
+            if (board[row][boardCol] != 0 && board[row][boardCol] == board[boardRow][boardCol]) { // vertical bottom
+                if (board[row][boardCol - 1] != 0 && board[row][boardCol - 1] == board[boardRow][boardCol]) { // diagonal bottom
+                    isWinner = true
+                }
             }
         }
     }
