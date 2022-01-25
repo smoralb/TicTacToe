@@ -22,7 +22,7 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
     }
 
 
-    fun resetGameBoard() {
+    internal fun resetGameBoard() {
         for (row in board.indices) {
             for (col in board.indices) {
                 board[row][col] = 0
@@ -36,23 +36,19 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
         isWinner = false
     }
 
-    fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {
+    internal fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {
         diagonal = 0
         reversedDiagonal = 0
         verticalCount = 0
 
-        for (col in board.indices) {
-            if (!isWinner) {
-                verticalCount = 0
-                checkVertical(col)
-            }
+        if (!isWinner) {
+            verticalCount = 0
+            checkVertical(eventCol - 1)
         }
 
-        for (row in board.indices) {
-            if (!isWinner) {
-                horizontalCount = 0
-                checkHorizontal(row)
-            }
+        if (!isWinner) {
+            horizontalCount = 0
+            checkHorizontal(eventRow - 1)
         }
 
         if (!isWinner) checkMainDiagonal()
@@ -67,8 +63,12 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
     }
 
     internal fun changePlayerTurn() {
-        if (player % 2 == 0) player -= 1
-        else player += 1
+        if (player % 2 == 0) {
+            player -= 1
+        }
+        else {
+            player += 1
+        }
     }
 
     private fun checkVertical(col: Int) {
@@ -82,7 +82,7 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
 
     private fun checkHorizontal(row: Int) {
         for (col in board.indices) {
-            if (board[row][col] != 0 && board[row][col] == board[0][col]) {
+            if (board[row][col] != 0 && board[row][col] == board[row][col]) {
                 horizontalCount += 1
             }
         }
@@ -113,7 +113,8 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
 
     private fun checkCorners() {
         if ((board[0][0] == board[0][board.size - 1] && board[0][0] == board[board.size - 1][0]
-                    && board[0][0] == board[board.size - 1][board.size - 1]) && board[0][0] != 0) {
+                    && board[0][0] == board[board.size - 1][board.size - 1]) && board[0][0] != 0
+        ) {
             if (board[0][0] == board[0][board.size - 1] && board[0][0] == board[board.size - 1][board.size - 1]) {
                 isWinner = true
             }
