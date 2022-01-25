@@ -9,8 +9,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
-import com.smb.components.base.BaseCustomView
 import com.smb.components.R
+import com.smb.components.base.BaseCustomView
 import com.smb.core.extensions.getColorByResourceId
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
@@ -33,7 +33,6 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
     override val viewModel: GameBoardViewModel by inject()
 
     private var cellSize = ZERO
-    var winningLine = false
     private val paint: Paint = Paint()
 
     init {
@@ -79,17 +78,16 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
             val column = ceil(event.x / cellSize)
 
             // To avoid user to place another chip if there is a winner
-            if (!winningLine) {
+            if (!viewModel.isWinner) {
                 if (viewModel.isCellAvailable(row.toInt() - 1, column.toInt() - 1)) {
 
                     // To force to redraw the gameBoard, call onDraw method again
                     invalidate()
 
-                    winningLine = viewModel.winnerCheck(row.toInt(), column.toInt())
+                    viewModel.isWinner = viewModel.winnerCheck(row.toInt(), column.toInt())
 
-                    if (viewModel.player % 2 == 0) {
-                        viewModel.player = viewModel.player - 1
-                    } else viewModel.player = viewModel.player + 1
+                    viewModel.changePlayerTurn()
+
                 }
             }
             true
@@ -97,7 +95,6 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
     }
 
     private fun drawGameBoard(canvas: Canvas) {
-
         with(paint) {
             color = resources.getColorByResourceId(context, R.color.cell_border)
             strokeWidth = CELL_SEPARATOR_THICKNESS
@@ -201,10 +198,7 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
         @BindingAdapter("resetGameBoard")
         fun resetGameBoard(view: GameBoard, value: Boolean) {
             if (value) {
-                with(view) {
-                    resetBoard()
-                    winningLine = false
-                }
+                view.resetBoard()
             }
         }
     }

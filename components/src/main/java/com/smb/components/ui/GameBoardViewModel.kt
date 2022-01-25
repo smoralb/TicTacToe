@@ -7,20 +7,20 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
     // A 4x4 array of Int, all set to 0.
     var board = Array(4) { Array(4) { 0 } }
     var player = 1
-    var isWinner = false
     var diagonal = 0
     var reversedDiagonal = 0
     var verticalCount = 0
     var horizontalCount = 0
+    var isWinner = false
 
     //To check if there is a chip placed in the selected cell
-    fun isCellAvailable(row: Int, column: Int): Boolean =
-        if (board[row][column] == 0) {
-            board[row][column] = player
+    val isCellAvailable = { row: Int, col: Int ->
+        if (board[row][col] == 0) {
+            board[row][col] = player
             true
-        } else {
-            false
-        }
+        } else false
+    }
+
 
     fun resetGameBoard() {
         for (row in board.indices) {
@@ -29,11 +29,11 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
             }
         }
         player = 1
-        isWinner = false
         diagonal = 0
         reversedDiagonal = 0
         verticalCount = 0
         horizontalCount = 0
+        isWinner = false
     }
 
     fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {
@@ -54,22 +54,21 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
                 checkHorizontal(row)
             }
         }
-        if (!isWinner) {
-            checkMainDiagonal()
-        }
-        if (!isWinner) {
-            checkReversedDiagonal()
-        }
 
-        if (!isWinner) {
-            checkCorners()
-        }
+        if (!isWinner) checkMainDiagonal()
 
-        if (!isWinner) {
-            checkIfBox(eventRow, eventCol)
-        }
+        if (!isWinner) checkReversedDiagonal()
+
+        if (!isWinner) checkCorners()
+
+        if (!isWinner) checkIfBox(eventRow, eventCol)
 
         return (isWinner || checkIfBoardIsFilled())
+    }
+
+    internal fun changePlayerTurn() {
+        if (player % 2 == 0) player -= 1
+        else player += 1
     }
 
     private fun checkVertical(col: Int) {
