@@ -1,4 +1,4 @@
-package com.smb.base
+package com.smb.components.base
 
 import androidx.lifecycle.LifecycleOwner
 import com.smb.core.presentation.BaseState

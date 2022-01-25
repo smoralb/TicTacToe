@@ -1,4 +1,4 @@
-package com.smb.components
+package com.smb.components.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,8 +9,12 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
-import com.smb.base.BaseCustomView
+import com.smb.components.base.BaseCustomView
+import com.smb.components.R
 import com.smb.core.extensions.getColorByResourceId
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -21,10 +25,12 @@ private const val CELL_SEPARATOR_THICKNESS = 3F
 private const val GAME_CHIPS_THICKNESS = 20F
 private const val GAME_CHIPS_MARGIN = 0.2F
 
+@KoinApiExtension
 class GameBoard(context: Context, attributeSet: AttributeSet) :
-    View(context, attributeSet), BaseCustomView<GameBoardState, GameBoardViewModel> {
+    View(context, attributeSet), BaseCustomView<GameBoardState, GameBoardViewModel>,
+    KoinComponent {
 
-    override val viewModel: GameBoardViewModel = GameBoardViewModel()
+    override val viewModel: GameBoardViewModel by inject()
 
     private var cellSize = ZERO
     var winningLine = false

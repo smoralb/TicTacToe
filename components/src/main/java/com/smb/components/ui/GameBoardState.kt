@@ -1,4 +1,4 @@
-package com.smb.components
+package com.smb.components.ui
 
 import com.smb.core.presentation.BaseState
 
