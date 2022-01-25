@@ -8,6 +8,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LifecycleOwner
+import com.smb.base.BaseCustomView
 import com.smb.core.extensions.getColorByResourceId
 import kotlin.math.ceil
 import kotlin.math.min
@@ -19,16 +21,20 @@ private const val CELL_SEPARATOR_THICKNESS = 3F
 private const val GAME_CHIPS_THICKNESS = 20F
 private const val GAME_CHIPS_MARGIN = 0.2F
 
-class GameBoard : View {
+class GameBoard : View, BaseCustomView<GameBoardState, GameBoardViewModel> {
 
-    // Will be deleted when all logic is made in the ViewModel
-    private val gameLogic: GameLogic = GameLogic()
+    override val viewModel: GameBoardViewModel = GameBoardViewModel()
+
     private var cellSize = ZERO
     var winningLine = false
     private val paint: Paint = Paint()
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.setBackgroundColor(resources.getColorByResourceId(context, R.color.white))
+    }
+
+    override fun onLifecycleOwnerAttached(lifeCycleOwner: LifecycleOwner) {
+        //
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -67,16 +73,16 @@ class GameBoard : View {
 
             // To avoid user to place another chip if there is a winner
             if (!winningLine) {
-                if (gameLogic.isCellAvailable(row.toInt() - 1, column.toInt() - 1)) {
+                if (viewModel.isCellAvailable(row.toInt() - 1, column.toInt() - 1)) {
 
                     // To force to redraw the gameBoard, call onDraw method again
                     invalidate()
 
-                    winningLine = gameLogic.winnerCheck(row.toInt(), column.toInt())
+                    winningLine = viewModel.winnerCheck(row.toInt(), column.toInt())
 
-                    if (gameLogic.player % 2 == 0) {
-                        gameLogic.player = gameLogic.player - 1
-                    } else gameLogic.player = gameLogic.player + 1
+                    if (viewModel.player % 2 == 0) {
+                        viewModel.player = viewModel.player - 1
+                    } else viewModel.player = viewModel.player + 1
                 }
             }
             true
@@ -122,8 +128,8 @@ class GameBoard : View {
     private fun drawMarkers(canvas: Canvas) {
         for (row in ZERO until MAX_CELLS) {
             for (column in ZERO until MAX_CELLS) {
-                if (gameLogic.board[row][column] != 0) {
-                    if (gameLogic.board[row][column] == 1) {
+                if (viewModel.board[row][column] != 0) {
+                    if (viewModel.board[row][column] == 1) {
                         drawX(canvas, row, column)
                     } else {
                         drawO(canvas, row, column)
@@ -179,7 +185,7 @@ class GameBoard : View {
     }
 
     private fun resetBoard() {
-        gameLogic.resetGameBoard()
+        viewModel.resetGameBoard()
         invalidate()
     }
 
@@ -188,7 +194,10 @@ class GameBoard : View {
         @BindingAdapter("resetGameBoard")
         fun resetGameBoard(view: GameBoard, value: Boolean) {
             if (value) {
-                view.resetBoard()
+                with(view) {
+                    resetBoard()
+                    winningLine = false
+                }
             }
         }
     }

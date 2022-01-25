@@ -1,19 +1,17 @@
 package com.smb.components
 
-class GameLogic {
+import com.smb.core.presentation.BaseViewModel
 
-    var board = arrayOf<Array<Int>>()
+class GameBoardViewModel : BaseViewModel<GameBoardState>() {
+
+    // A 4x4 array of Int, all set to 0.
+    var board = Array(4) { Array(4) { 0 } }
     var player = 1
     var isWinner = false
     var diagonal = 0
     var reversedDiagonal = 0
     var verticalCount = 0
     var horizontalCount = 0
-
-    init {
-        // A 4x4 array of Int, all set to 0.
-        board = Array(4) { Array(4) { 0 } }
-    }
 
     //To check if there is a chip placed in the selected cell
     fun isCellAvailable(row: Int, column: Int): Boolean =
@@ -31,6 +29,11 @@ class GameLogic {
             }
         }
         player = 1
+        isWinner = false
+        diagonal = 0
+        reversedDiagonal = 0
+        verticalCount = 0
+        horizontalCount = 0
     }
 
     fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {
@@ -110,7 +113,8 @@ class GameLogic {
     }
 
     private fun checkCorners() {
-        if ((board[0][0] + board[0][board.size - 1] + board[0][board.size - 1] + board[board.size - 1][board.size - 1]) == board.size) {
+        if ((board[0][0] == board[0][board.size - 1] && board[0][0] == board[board.size - 1][0]
+                    && board[0][0] == board[board.size - 1][board.size - 1]) && board[0][0] != 0) {
             if (board[0][0] == board[0][board.size - 1] && board[0][0] == board[board.size - 1][board.size - 1]) {
                 isWinner = true
             }
