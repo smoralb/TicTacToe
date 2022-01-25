@@ -1,6 +1,12 @@
 # TicTacToe
 
-Game with noughts and corsses 
+Game with noughts and corsses that has different ways to win:
+
+* 4 in row horizontal
+* 4 in row vertical
+* 2x2 box
+* Main diagonal
+* Reverse diagonal
 
 ## Libraries used
 
