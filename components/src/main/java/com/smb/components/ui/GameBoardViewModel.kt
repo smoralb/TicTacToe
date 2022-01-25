@@ -1,69 +1,74 @@
-package com.smb.components
+package com.smb.components.ui
 
-import com.smb.core.extensions.forEach2D
+import com.smb.core.presentation.BaseViewModel
 
-class GameLogic {
+class GameBoardViewModel : BaseViewModel<GameBoardState>() {
 
-    var board = arrayOf<Array<Int>>()
+    // A 4x4 array of Int, all set to 0.
+    var board = Array(4) { Array(4) { 0 } }
     var player = 1
-    var isWinner = false
     var diagonal = 0
     var reversedDiagonal = 0
     var verticalCount = 0
     var horizontalCount = 0
+    var isWinner = false
 
-    init {
-        // A 4x4 array of Int, all set to 0.
-        board = Array(4) { Array(4) { 0 } }
-    }
-
-    fun updateGameBoard(row: Int, column: Int): Boolean {
-        return if (board[row - 1][column - 1] == 0) {
-            board[row - 1][column - 1] = player
+    //To check if there is a chip placed in the selected cell
+    val isCellAvailable = { row: Int, col: Int ->
+        if (board[row][col] == 0) {
+            board[row][col] = player
             true
-        } else {
-            false
+        } else false
+    }
+
+
+    internal fun resetGameBoard() {
+        for (row in board.indices) {
+            for (col in board.indices) {
+                board[row][col] = 0
+            }
         }
+        player = 1
+        diagonal = 0
+        reversedDiagonal = 0
+        verticalCount = 0
+        horizontalCount = 0
+        isWinner = false
     }
 
-    fun resetGameBoard() {
-        board.forEach2D { board[it][it] = 0 }
-    }
-
-    fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {
+    internal fun winnerCheck(eventRow: Int, eventCol: Int): Boolean {
         diagonal = 0
         reversedDiagonal = 0
         verticalCount = 0
 
-        for (col in board.indices) {
-            if (!isWinner) {
-                verticalCount = 0
-                checkVertical(col)
-            }
-        }
-
-        for (row in board.indices) {
-            if (!isWinner) {
-                horizontalCount = 0
-                checkHorizontal(row)
-            }
-        }
         if (!isWinner) {
-            checkMainDiagonal()
-        }
-        if (!isWinner) {
-            checkReversedDiagonal()
+            verticalCount = 0
+            checkVertical(eventCol - 1)
         }
 
         if (!isWinner) {
-            checkCorners()
+            horizontalCount = 0
+            checkHorizontal(eventRow - 1)
         }
 
-        if (!isWinner) {
-            checkIfBox(eventRow, eventCol)
-        }
+        if (!isWinner) checkMainDiagonal()
+
+        if (!isWinner) checkReversedDiagonal()
+
+        if (!isWinner) checkCorners()
+
+        if (!isWinner) checkIfBox(eventRow, eventCol)
 
         return (isWinner || checkIfBoardIsFilled())
+    }
+
+    internal fun changePlayerTurn() {
+        if (player % 2 == 0) {
+            player -= 1
+        }
+        else {
+            player += 1
+        }
     }
 
     private fun checkVertical(col: Int) {
@@ -77,7 +82,7 @@ class GameLogic {
 
     private fun checkHorizontal(row: Int) {
         for (col in board.indices) {
-            if (board[row][col] != 0 && board[row][col] == board[0][col]) {
+            if (board[row][col] != 0 && board[row][col] == board[row][col]) {
                 horizontalCount += 1
             }
         }
@@ -107,7 +112,9 @@ class GameLogic {
     }
 
     private fun checkCorners() {
-        if ((board[0][0] + board[0][board.size - 1] + board[0][board.size - 1] + board[board.size - 1][board.size - 1]) == board.size) {
+        if ((board[0][0] == board[0][board.size - 1] && board[0][0] == board[board.size - 1][0]
+                    && board[0][0] == board[board.size - 1][board.size - 1]) && board[0][0] != 0
+        ) {
             if (board[0][0] == board[0][board.size - 1] && board[0][0] == board[board.size - 1][board.size - 1]) {
                 isWinner = true
             }

@@ -1,6 +1,7 @@
 package com.smb.tictactoe
 
 import android.app.Application
+import com.smb.components.di.uiModule
 import com.smb.tictactoe.di.presentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -13,7 +14,7 @@ class BaseApplication: Application() {
         startKoin {
             androidLogger()
             androidContext(this@BaseApplication)
-            modules(listOf(presentationModule))
+            modules(listOf(presentationModule, uiModule))
         }
     }
 }

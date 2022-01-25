@@ -1,6 +1,7 @@
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: "kotlin-kapt"
+apply plugin: 'de.mannodermaus.android-junit5'
 apply from: "$project.rootDir/dependencies.gradle"
 
 android {
@@ -35,5 +36,5 @@ android {
 
 dependencies {
     implementation basic.values()
-    testImplementation junit.values()
+    api unit_test.values()
 }
