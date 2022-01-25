@@ -22,8 +22,7 @@ The different modules have different responsabilities:
 
 ![Captura de pantalla 2022-01-25 a las 23 19 20](https://user-images.githubusercontent.com/21090916/151069275-3c8cf533-950a-40d9-b92d-7188f5c424e0.png)
 
-
-BASE.GRADLE contain all the common logic for all the different modules (app, core and components).
-DEPENDENCIES.GRADLE contain a list of LinkedHashMaps with all the dependencies and all the correspondant versions.
-The rest of the gralde files only contain the specific setup that each module require.
+* `BASE.GRADLE` contain all the common logic for all the different modules (app, core and components).
+* `DEPENDENCIES.GRADLE` contain a list of LinkedHashMaps with all the dependencies and all the correspondant versions.
+* The rest of the gralde files only contain the specific setup that each module require.
 
