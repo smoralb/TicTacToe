@@ -8,5 +8,6 @@ android {
 }
 dependencies {
     implementation project (':core')
+    implementation project (':components')
     implementation koin.values()
 }
