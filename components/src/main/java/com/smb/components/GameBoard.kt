@@ -21,7 +21,8 @@ private const val CELL_SEPARATOR_THICKNESS = 3F
 private const val GAME_CHIPS_THICKNESS = 20F
 private const val GAME_CHIPS_MARGIN = 0.2F
 
-class GameBoard : View, BaseCustomView<GameBoardState, GameBoardViewModel> {
+class GameBoard(context: Context, attributeSet: AttributeSet) :
+    View(context, attributeSet), BaseCustomView<GameBoardState, GameBoardViewModel> {
 
     override val viewModel: GameBoardViewModel = GameBoardViewModel()
 
@@ -29,7 +30,7 @@ class GameBoard : View, BaseCustomView<GameBoardState, GameBoardViewModel> {
     var winningLine = false
     private val paint: Paint = Paint()
 
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+    init {
         this.setBackgroundColor(resources.getColorByResourceId(context, R.color.white))
     }
 
@@ -67,7 +68,7 @@ class GameBoard : View, BaseCustomView<GameBoardState, GameBoardViewModel> {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-       return if (event.action == MotionEvent.ACTION_DOWN) {
+        return if (event.action == MotionEvent.ACTION_DOWN) {
             val row = ceil(event.y / cellSize)
             val column = ceil(event.x / cellSize)
 
