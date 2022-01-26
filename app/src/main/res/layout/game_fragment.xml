@@ -43,7 +43,7 @@
 
         <com.smb.components.ui.GameBoard
             android:id="@+id/gbGame"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_board_game"
             android:layout_marginEnd="@dimen/margin_end_board_game"

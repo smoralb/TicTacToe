@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- General dimens -->
+    <dimen name="match_constraint">0dp</dimen>
+
     <!-- Board dimens -->
     <dimen name="board_player_turn_title">24sp</dimen>
     <dimen name="board_player_turn_title_margin_top">20dp</dimen>
