@@ -8,7 +8,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LifecycleOwner
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import com.smb.components.R
 import com.smb.components.base.BaseCustomView
 import com.smb.core.extensions.getColorByResourceId
@@ -37,10 +38,6 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
 
     init {
         this.setBackgroundColor(resources.getColorByResourceId(context, R.color.white))
-    }
-
-    override fun onLifecycleOwnerAttached(lifeCycleOwner: LifecycleOwner) {
-        //
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -78,16 +75,14 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
             val column = ceil(event.x / cellSize)
 
             // To avoid user to place another chip if there is a winner
-            if (!viewModel.isWinner) {
-                if (viewModel.isCellAvailable(row.toInt() - 1, column.toInt() - 1)) {
-
-                    // To force to redraw the gameBoard, call onDraw method again
-                    invalidate()
-
-                    viewModel.isWinner = viewModel.winnerCheck(row.toInt(), column.toInt())
-
-                    viewModel.changePlayerTurn()
-
+            with(viewModel) {
+                if (!isWinner) {
+                    if (isCellAvailable(row.toInt() - 1, column.toInt() - 1)) {
+                        // To force to redraw the gameBoard, call onDraw method
+                        invalidate()
+                        player = updatePlayerTurn()
+                        isWinner = winnerCheck(row.toInt(), column.toInt())
+                    }
                 }
             }
             true
@@ -201,6 +196,31 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
                 view.resetBoard()
             }
         }
+
+        // Necessary for InverseDataBinding but at this moment, it is not necessary to set player from here
+        @JvmStatic
+        @BindingAdapter("playerTurn")
+        fun setPlayerTurn(view: GameBoard, playerTurn: Int) {
+        }
+
+        @JvmStatic
+        @InverseBindingAdapter(attribute = "playerTurn", event = "playerTurnAttrChanged")
+        fun getPlayerTurn(view: GameBoard): Int {
+            return view.viewModel.player
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        @JvmStatic
+        @BindingAdapter(value = ["playerTurnAttrChanged"])
+        fun setListener(view: GameBoard, listener: InverseBindingListener?) {
+            listener?.let {
+                view.setOnTouchListener { _, motionEvent ->
+                    listener.onChange()
+                    view.onTouchEvent(motionEvent)
+                }
+            }
+        }
+
     }
 
 }

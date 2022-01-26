@@ -5,10 +5,10 @@ import androidx.databinding.BindingAdapter
 import com.smb.core.R
 
 @BindingAdapter("drawableSrc")
-fun getDrawableFromResource(imageView: ImageView, resource: Int) =
+fun getDrawableFromResource(imageView: ImageView, turn: Int) =
     imageView.setImageResource(
-        when (resource) {
-            0 -> R.drawable.ic_cross
-            else -> resource
+        when (turn) {
+            2 -> R.drawable.ic_nought
+            else -> R.drawable.ic_cross
         }
     )
