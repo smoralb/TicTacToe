@@ -11,11 +11,11 @@ class TTTViewModel : ViewModel() {
     var clearBoard: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun onButtonClick() {
+        playerTurn update 1
         clearBoard update true
     }
 
     fun updatePlayerTurn(turn: Int) {
-        playerTurn update 1
         playerTurn update turn
     }
 

@@ -43,7 +43,7 @@ I have implemented a project that I am using these architecture [a link](https:/
 ## Testing
 
 For this project, I have created unit tests for the two viewModels that I have created in this project, `TTTViewModel` and `GameBoardViewModel`. For these uni tests I have used
-JUnit 5 and Mockito 
+JUnit 5 and I have also created a custom annotation to be able to test LiveData objects (`InstantExecutorExtension`).
 
 ## Gradle files structure
 
@@ -51,5 +51,5 @@ JUnit 5 and Mockito
 
 * `BASE.GRADLE` contain all the common logic for all the different modules (app, core and components).
 * `DEPENDENCIES.GRADLE` contain a list of LinkedHashMaps with all the dependencies and all the correspondent versions.
-* The rest of the gralde files only contain the specific setup that each module require.
+* The rest of the gradle files only contain the specific setup that each module require.
 
