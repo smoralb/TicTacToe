@@ -62,14 +62,9 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
         return (isWinner || checkIfBoardIsFilled())
     }
 
-    internal fun changePlayerTurn() {
-        if (player % 2 == 0) {
-            player -= 1
-        }
-        else {
-            player += 1
-        }
-    }
+    internal fun updatePlayerTurn() =
+        if (player % 2 == 0) player - 1
+        else player + 1
 
     private fun checkVertical(col: Int) {
         for (row in board.indices) {

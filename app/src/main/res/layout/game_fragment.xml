@@ -33,9 +33,10 @@
                 android:textSize="@dimen/board_player_turn_title" />
 
             <ImageView
+                android:id="@+id/ivChip"
                 android:layout_width="@dimen/width_board_chip_current_player"
                 android:layout_height="@dimen/height_board_chip_current_player"
-                app:drawableSrc="@{viewModel.playerChip}"
+                app:drawableSrc="@{viewModel.playerTurn}"
                 tools:src="@drawable/ic_cross" />
 
         </LinearLayout>
@@ -50,7 +51,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llCurrentPlayer"
-            app:resetGameBoard="@{viewModel.clearBoard}" />
+            app:resetGameBoard="@{viewModel.clearBoard}"
+            app:playerTurn="@={viewModel.playerChip}"/>
 
         <Button
             android:id="@+id/btnNewGame"
