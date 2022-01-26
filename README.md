@@ -38,7 +38,7 @@ Where the ViewModel would do all the logic and the states would be managed in th
 The `viewModel` (Does an API call) -> the `viewModel` receives data from the API -> the `viewModel` updates the state -> The `state` is observed in the `Fragment` ->
 when the `state` is updated, then in the `Fragment` we are able to make the pertinent updates.
 
-I have implemented a project that I am using these architecture [a link](https://github.com/smoralb/BaseApplication) (is not finished at all...)
+I have implemented a project that I am using these architecture [BaseApplication](https://github.com/smoralb/BaseApplication) (is not finished at all...)
 
 ## Testing
 
