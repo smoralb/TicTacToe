@@ -82,7 +82,7 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
 
     private fun checkHorizontal(row: Int) {
         for (col in board.indices) {
-            if (board[row][col] != 0 && board[row][col] == board[row][col]) {
+            if (board[row][col] != 0 && board[row][col] == board[row][0]) {
                 horizontalCount += 1
             }
         }
