@@ -27,7 +27,7 @@ private const val GAME_CHIPS_MARGIN = 0.2F
 
 @KoinApiExtension
 class GameBoard(context: Context, attributeSet: AttributeSet) :
-    View(context, attributeSet), BaseCustomView<GameBoardState, GameBoardViewModel>,
+    View(context, attributeSet), BaseCustomView<GameBoardViewModel>,
     KoinComponent {
 
     override val viewModel: GameBoardViewModel by inject()

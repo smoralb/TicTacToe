@@ -1,15 +1,8 @@
 package com.smb.components.base
 
-import androidx.lifecycle.LifecycleOwner
-import com.smb.core.presentation.BaseState
-import com.smb.core.presentation.BaseViewModel
+import androidx.lifecycle.ViewModel
 
-interface BaseCustomView<S : BaseState, VM : BaseViewModel<S>> {
+interface BaseCustomView<VM : ViewModel> {
 
     val viewModel: VM
-
-    /*
-    To attach LifeCycleOwner in order to use Livedata
-     */
-    fun onLifecycleOwnerAttached(lifeCycleOwner: LifecycleOwner)
 }

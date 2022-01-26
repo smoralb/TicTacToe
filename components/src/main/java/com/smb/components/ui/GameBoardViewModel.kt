@@ -1,8 +1,8 @@
 package com.smb.components.ui
 
-import com.smb.core.presentation.BaseViewModel
+import androidx.lifecycle.ViewModel
 
-class GameBoardViewModel : BaseViewModel<GameBoardState>() {
+class GameBoardViewModel : ViewModel() {
 
     // A 4x4 array of Int, all set to 0.
     var board = Array(4) { Array(4) { 0 } }
