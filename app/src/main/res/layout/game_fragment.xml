@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/light_aquamarine"
-            android:onClick="@{() -> viewModel.onButtonClick()}"
+            android:onClick="@{() -> viewModel.onNewGameClick()}"
             android:text="@string/board_new_game_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
