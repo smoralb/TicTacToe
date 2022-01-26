@@ -15,6 +15,7 @@ class TTTViewModel : ViewModel() {
     }
 
     fun updatePlayerTurn(turn: Int) {
+        playerTurn update 1
         playerTurn update turn
     }
 
