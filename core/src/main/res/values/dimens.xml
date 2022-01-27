@@ -10,4 +10,6 @@
     <dimen name="board_chips_thickness">10dp</dimen>
     <dimen name="board_chip_current_player_height">60dp</dimen>
     <dimen name="board_chip_current_player_width">60dp</dimen>
+    <dimen name="margin_board_new_game_button">40dp</dimen>
+    <dimen name="margin_top_board_game">40dp</dimen>
 </resources>
