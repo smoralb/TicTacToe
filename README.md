@@ -26,10 +26,7 @@ The different modules have different responsibilities:
 
 ## Presentation layer architecture
 
-Now, in the presentation layer we only have two different files, the Fragment and the ViewModel. In these two files we will manage all the logic
-related to the view.
-
-The architecture I would like to use and to implement, an architecture based on 3 different files. 
+The presentation layer is now based on three different files:
 
 `ViewModel`, `Fragment` and `State`
 
@@ -38,7 +35,7 @@ Where the ViewModel would do all the logic and the states would be managed in th
 The `viewModel` (Does an API call) -> the `viewModel` receives data from the API -> the `viewModel` updates the state -> The `state` is observed in the `Fragment` ->
 when the `state` is updated, then in the `Fragment` we are able to make the pertinent updates.
 
-I have implemented a project that I am using these architecture [BaseApplication](https://github.com/smoralb/BaseApplication) (is not finished at all...)
+![Captura de pantalla 2022-01-27 a las 14 11 28](https://user-images.githubusercontent.com/21090916/151366032-afcd6443-51f6-4d55-93b1-be09a39bd856.png)
 
 ## Testing
 
