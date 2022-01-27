@@ -21,6 +21,18 @@ class GameBoardViewModel : ViewModel() {
         } else false
     }
 
+    internal fun checkIfBoardIsFilled(): Boolean {
+        var items = 0
+
+        for (row in board.indices) {
+            for (col in board.indices) {
+                if (board[row][col] != 0) {
+                    items += 1
+                }
+            }
+        }
+        return items == (board.size * board.size)
+    }
 
     internal fun resetGameBoard() {
         for (row in board.indices) {
@@ -59,7 +71,7 @@ class GameBoardViewModel : ViewModel() {
 
         if (!isWinner) checkIfBox(eventRow, eventCol)
 
-        return (isWinner || checkIfBoardIsFilled())
+        return isWinner
     }
 
     internal fun updatePlayerTurn() =
@@ -208,13 +220,6 @@ class GameBoardViewModel : ViewModel() {
                     isWinner = true
                 }
             }
-        }
-    }
-
-
-    private fun checkIfBoardIsFilled() = board.all { row ->
-        row.all { col ->
-            col == 1
         }
     }
 

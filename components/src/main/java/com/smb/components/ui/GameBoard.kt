@@ -35,6 +35,10 @@ class GameBoard(context: Context, attributeSet: AttributeSet) :
 
     private var cellSize = ZERO
     private val paint: Paint = Paint()
+    val isWinnerMovement: Boolean
+        get() = viewModel.isWinner
+    val isDraw : Boolean
+        get() = !viewModel.isWinner && viewModel.checkIfBoardIsFilled()
 
     init {
         this.setBackgroundColor(resources.getColorByResourceId(context, R.color.white))

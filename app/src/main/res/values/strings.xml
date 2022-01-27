@@ -2,4 +2,6 @@
     <string name="app_name">Tic Tac Toe</string>
     <string name="board_current_player_title">Current Player: </string>
     <string name="board_new_game_button">NEW GAME</string>
+    <string name="board_winner_text">The winner is:</string>
+    <string name="board_draw_text">Draw!!</string>
 </resources>
