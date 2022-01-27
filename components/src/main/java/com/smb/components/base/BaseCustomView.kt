@@ -1,9 +1,8 @@
 package com.smb.components.base
 
-import com.smb.core.presentation.BaseState
-import com.smb.core.presentation.BaseViewModel
+import androidx.lifecycle.ViewModel
 
-interface BaseCustomView<S : BaseState, VM : BaseViewModel<S>> {
+interface BaseCustomView<VM : ViewModel> {
 
     val viewModel: VM
 }

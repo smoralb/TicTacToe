@@ -4,10 +4,12 @@ import com.smb.tictactoe.presentation.mapper.TTTMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
+import org.mockito.junit.jupiter.MockitoExtension
 import test.BaseViewModelUnitTest
 
-
+@ExtendWith(MockitoExtension::class)
 class TTTViewModelTest : BaseViewModelUnitTest() {
 
     @Mock
@@ -21,8 +23,11 @@ class TTTViewModelTest : BaseViewModelUnitTest() {
     }
 
     @Test
-    fun `onButtonClick should clear board game`() {
-        viewModel.onButtonClick()
+    fun `onNewGameClick should clear board game`() {
+        viewModel.onNewGameClick()
         assertEquals(true, viewModel.clearBoard.value)
+        assertEquals(false, viewModel.showWinnerAlert.value)
+        assertEquals(1, viewModel.playerTurn.value)
     }
+
 }

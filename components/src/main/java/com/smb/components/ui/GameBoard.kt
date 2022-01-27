@@ -28,13 +28,17 @@ private const val GAME_CHIPS_MARGIN = 0.2F
 
 @KoinApiExtension
 class GameBoard(context: Context, attributeSet: AttributeSet) :
-    View(context, attributeSet), BaseCustomView<GameBoardState, GameBoardViewModel>,
+    View(context, attributeSet), BaseCustomView<GameBoardViewModel>,
     KoinComponent {
 
     override val viewModel: GameBoardViewModel by inject()
 
     private var cellSize = ZERO
     private val paint: Paint = Paint()
+    val isWinnerMovement: Boolean
+        get() = viewModel.isWinner
+    val isDraw : Boolean
+        get() = !viewModel.isWinner && viewModel.checkIfBoardIsFilled()
 
     init {
         this.setBackgroundColor(resources.getColorByResourceId(context, R.color.white))

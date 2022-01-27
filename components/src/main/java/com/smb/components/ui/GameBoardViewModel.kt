@@ -1,8 +1,8 @@
 package com.smb.components.ui
 
-import com.smb.core.presentation.BaseViewModel
+import androidx.lifecycle.ViewModel
 
-class GameBoardViewModel : BaseViewModel<GameBoardState>() {
+class GameBoardViewModel : ViewModel() {
 
     // A 4x4 array of Int, all set to 0.
     var board = Array(4) { Array(4) { 0 } }
@@ -21,6 +21,18 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
         } else false
     }
 
+    internal fun checkIfBoardIsFilled(): Boolean {
+        var items = 0
+
+        for (row in board.indices) {
+            for (col in board.indices) {
+                if (board[row][col] != 0) {
+                    items += 1
+                }
+            }
+        }
+        return items == (board.size * board.size)
+    }
 
     internal fun resetGameBoard() {
         for (row in board.indices) {
@@ -59,7 +71,7 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
 
         if (!isWinner) checkIfBox(eventRow, eventCol)
 
-        return (isWinner || checkIfBoardIsFilled())
+        return isWinner
     }
 
     internal fun updatePlayerTurn() =
@@ -208,13 +220,6 @@ class GameBoardViewModel : BaseViewModel<GameBoardState>() {
                     isWinner = true
                 }
             }
-        }
-    }
-
-
-    private fun checkIfBoardIsFilled() = board.all { row ->
-        row.all { col ->
-            col == 1
         }
     }
 

@@ -21,9 +21,9 @@ ext {
     unit_test = [
             jupiter_api     : "org.junit.jupiter:junit-jupiter-api:${versions.jupiter_version}",
             jupiter_engine       : "org.junit.jupiter:junit-jupiter-engine:${versions.jupiter_version}",
+            jupiter_parameterized: "org.junit.jupiter:junit-jupiter-params:${versions.jupiter_version}",
             mockito_jupiter : "org.mockito:mockito-junit-jupiter:${versions.mockito_jupiter}",
-            core_ktx_testing: "androidx.arch.core:core-testing:${versions.core_testing}",
-            jupiter_parameterized: "org.junit.jupiter:junit-jupiter-params:${versions.jupiter_version}"
+            core_ktx_testing: "androidx.arch.core:core-testing:${versions.core_testing}"
     ]
 
     koin = [
