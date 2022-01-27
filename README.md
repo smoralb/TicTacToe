@@ -21,7 +21,7 @@ Game with noughts and corsses that has different ways to win:
 The different modules have different responsibilities:
 
 * `app`         -> Has the main logic of the app.
-* `core`        -> Contain all the logic that could potentially use all over the app. Here I have implemented the base classes.
+* `core`        -> Contain all the logic that could potentially use all over the app. Here I have implemented the base classes and all the extensions.
 * `components`  -> Contain all the custom views that would be used all over the app.
 
 ## Presentation layer architecture
@@ -37,6 +37,44 @@ when the `state` is updated, then in the `Fragment` we are able to make the pert
 
 ![Captura de pantalla 2022-01-27 a las 14 15 39](https://user-images.githubusercontent.com/21090916/151366281-df5b814d-6f37-4111-9e4c-9e0b5781c2a8.png)
 
+## DataBinding
+
+In this project I have used two different ways to bind data to the custom view `GameBoard`.
+
+* Using 2 way dataBinding
+
+For this, I have created a BindingAdapter and an InverseBindingAdapter for the attribute `playerTurn`, where it is going to emit data to the view when user touch any cell of the board and there is no winner combination or draw.
+
+```
+@JvmStatic
+@InverseBindingAdapter(attribute = "playerTurn", event = "playerTurnAttrChanged")
+fun getPlayerTurn(view: GameBoard): Int {
+    return view.viewModel.player
+}
+@SuppressLint("ClickableViewAccessibility")
+@JvmStatic
+@BindingAdapter(value = ["playerTurnAttrChanged"])
+fun setListener(view: GameBoard, listener: InverseBindingListener?) {
+    listener?.let {
+        view.setOnTouchListener { _, motionEvent ->
+            listener.onChange()
+            view.onTouchEvent(motionEvent)
+        }
+    }
+}
+```
+
+* Access to variables of the view using View binding
+
+In the `GameBoard` custom view, I have created two different variables called `isWinnerMovement` and `isDraw` that has a custom get function that is triggered when any of them are consulted.
+
+```
+viewModel.checkGameStatus(
+    binding.gbGame.isWinnerMovement,
+    binding.gbGame.isDraw,
+    playerTurn
+)
+```
 
 ## Testing
 
