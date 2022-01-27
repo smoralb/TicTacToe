@@ -23,8 +23,9 @@ class TTTViewModel(
     }
 
     internal fun checkGameStatus(isWinner: Boolean, isDraw: Boolean, playerTurn: Int) {
-        this.playerTurn update playerTurn
-        viewState update mapper.getGameResult(isWinner, isDraw, playerTurn)
+        val gameState = mapper.getGameResult(isWinner, isDraw, playerTurn)
+        if (gameState !is Winner && gameState != Draw) this.playerTurn update playerTurn
+        viewState update gameState
     }
 
 }
