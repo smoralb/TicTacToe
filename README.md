@@ -35,7 +35,8 @@ Where the ViewModel would do all the logic and the states would be managed in th
 The `viewModel` (Does an API call) -> the `viewModel` receives data from the API -> the `viewModel` updates the state -> The `state` is observed in the `Fragment` ->
 when the `state` is updated, then in the `Fragment` we are able to make the pertinent updates.
 
-![Captura de pantalla 2022-01-27 a las 14 11 28](https://user-images.githubusercontent.com/21090916/151366032-afcd6443-51f6-4d55-93b1-be09a39bd856.png)
+![Captura de pantalla 2022-01-27 a las 14 15 39](https://user-images.githubusercontent.com/21090916/151366281-df5b814d-6f37-4111-9e4c-9e0b5781c2a8.png)
+
 
 ## Testing
 
